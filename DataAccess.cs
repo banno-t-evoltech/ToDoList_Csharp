@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 
+
+/// <summary>
+/// ToDoの取得、追加、更新、削除する機能
+/// </summary>
 public class DataAccess
 {
     private string connectionString = "Data Source=todolist.db;Version=3;";
@@ -12,6 +16,7 @@ public class DataAccess
         InitializeDatabase();
     }
 
+    // 初期化(データベースが無い場合はテーブルを作成)
     private void InitializeDatabase()
     {
         if (!File.Exists("todolist.db"))
@@ -20,6 +25,7 @@ public class DataAccess
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
+                // 作成するテーブルのSQLクエリ
                 string createTableQuery = @"
                     CREATE TABLE IF NOT EXISTS Todos (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,6 +40,10 @@ public class DataAccess
         }
     }
 
+    /// <summary>
+    /// すべてのTodoアイテムを取得
+    /// </summary>
+    /// <returns>TodoItemのリスト</returns>
     public List<TodoItem> GetTodos()
     {
         List<TodoItem> todos = new List<TodoItem>();
@@ -49,17 +59,21 @@ public class DataAccess
                     {
                         todos.Add(new TodoItem
                         {
-                            Id = reader.GetInt32(0),
-                            Task = reader.GetString(1),
-                            IsCompleted = reader.GetInt32(2) == 1
+                            Id = reader.GetInt32(0), //Id取得
+                            Task = reader.GetString(1),　//Taskを取得
+                            IsCompleted = reader.GetInt32(2) == 1 //IsCompletedを取得
                         });
                     }
                 }
             }
         }
-        return todos;
+        return todos; //取得したtodoアイテムのリストを返す
     }
 
+    /// <summary>
+    /// todoアイテムを追加
+    /// </summary>
+    /// <param name="todo">追加するtodoitem</param>
     public void AddTodo(TodoItem todo)
     {
         using (var connection = new SQLiteConnection(connectionString))
@@ -75,6 +89,10 @@ public class DataAccess
         }
     }
 
+    /// <summary>
+    /// todoアイテムを更新
+    /// </summary>
+    /// <param name="todo">選択して更新するtodoitem</param>
     public void UpdateTodo(TodoItem todo)
     {
         using (var connection = new SQLiteConnection(connectionString))
@@ -91,6 +109,10 @@ public class DataAccess
         }
     }
 
+    /// <summary>
+    /// todoアイテムを削除
+    /// </summary>
+    /// <param name="id">削除するtodoアイテムを選択</param>
     public void DeleteTodo(int id)
     {
         using (var connection = new SQLiteConnection(connectionString))
