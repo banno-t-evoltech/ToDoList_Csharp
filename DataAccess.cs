@@ -113,6 +113,6 @@ public class TodoItem
     public bool IsCompleted { get; set; }
 public string TaskDisplay
     {
-        get { return IsCompleted ? "[完了] " + Task : Task; }
+        get { return IsCompleted ? " " + Task : Task; }
     }
 }
