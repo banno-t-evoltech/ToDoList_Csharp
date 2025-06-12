@@ -9,6 +9,9 @@ namespace ToDoList
         private DataAccess dataAccess;
         private List<TodoItem> currentTodos;
 
+        /// <summary>
+        /// データベースの初期化、ロード
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +31,11 @@ namespace ToDoList
             lstTodos.Refresh();
         }
 
+        /// <summary>
+        /// タスクの更新
+        /// </summary>
+        /// <param name="sender">更新ボタンクリック</param>
+        /// <param name="e"></param>
         private void btnUpdate_Click_1(object sender, EventArgs e)
         {
             if (lstTodos.SelectedItem is TodoItem selectedTodo)
@@ -43,6 +51,11 @@ namespace ToDoList
             }
         }
 
+        /// <summary>
+        /// タスクの追加
+        /// </summary>
+        /// <param name="sender">追加ボタンクリック</param>
+        /// <param name="e"></param>
         private void btnAdd_Click_1(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtTask.Text))
@@ -62,6 +75,11 @@ namespace ToDoList
             }
         }
 
+        /// <summary>
+        /// タスクの削除
+        /// </summary>
+        /// <param name="sender">削除ボタンクリック</param>
+        /// <param name="e"></param>
         private void btnDelete_Click_1(object sender, EventArgs e)
         {
             if (lstTodos.SelectedItem is TodoItem selectedTodo)
